@@ -5,7 +5,7 @@ from datasets.utils import disable_progress_bar
 from itertools import combinations
 from transformers import DefaultDataCollator
 
-class generaterMethod:
+class generater:
     def __init__(self, model, tokenizer, gen_model, gen_tokenizer):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = model
