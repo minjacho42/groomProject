@@ -27,7 +27,7 @@ def gdLoadModelForSequenceClassification(model_name, artifact_version = '1IBoQCi
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return (model, tokenizer)
 
-def loadModelForCasualLM(model_name, artifact_version, model_path = '/best_model_at_end/pytorch_model.bin'):
+def loadModelForCausalLM(model_name, artifact_version, model_path = '/best_model_at_end/pytorch_model.bin'):
     run = wandb.init()
     artifact = run.use_artifact(artifact_version, type='model')
     artifact_dir = artifact.download()
