@@ -1,4 +1,4 @@
-import torch
+import torch, re
 from tqdm import tqdm as tqdm
 from datasets import Dataset
 from datasets.utils import disable_progress_bar
@@ -36,6 +36,7 @@ class generater:
         disable_progress_bar()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        model = model.to(self.device)
         texts = []
         texts.append({'ids': [0], 'texts' : text})
         tokens = self.tokenizer.encode(text)
@@ -91,7 +92,6 @@ class generater:
                                 eos_token_id=self.gen_tokenizer.eos_token_id,
                                 bos_token_id=self.gen_tokenizer.bos_token_id)
         output = self.gen_tokenizer.decode(gen_ids[0])
-        pred,_ = output.split('<unused3>')
-        _,pred = pred.split('<unused2>')
-        pred = pred.strip()
-        return pred
+        pred = re.search('2\>\s(.+?)\s\<u', output)
+        ans=pred.group(1)
+        return ans
