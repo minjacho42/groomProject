@@ -78,14 +78,19 @@ class generater:
             
     def tokenizeMasked(self, data):
         text = self.deleteStyleToken(data, self.batch_size)
-        tokenized_datas = self.gen_tokenizer(
-            f"<unused0> <unused1> {text['masked']} <unused2>",
-            return_tensors="pt"
-        )
-        return tokenized_datas
+        if text:
+            tokenized_datas = self.gen_tokenizer(
+                f"<unused0> <unused1> {text['masked']} <unused2>",
+                return_tensors="pt"
+            )
+            return tokenized_datas
+        else:
+            return
 
     def makeMoralText(self, immoral_text):
         input = self.tokenizeMasked(immoral_text)
+        if not input:
+            return immoral_text
         gen_ids = self.gen_model.generate(**input,
                                 max_length=256,
                                 pad_token_id=self.gen_tokenizer.pad_token_id,
