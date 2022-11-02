@@ -6,12 +6,13 @@ from itertools import combinations
 from transformers import DefaultDataCollator
 
 class generater:
-    def __init__(self, model, tokenizer, gen_model, gen_tokenizer):
+    def __init__(self, model, tokenizer, gen_model, gen_tokenizer, batch_size = 64):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = model
+        self.model = model.to(self.device)
         self.tokenizer = tokenizer
         self.gen_model = gen_model
         self.gen_tokenizer = gen_tokenizer
+        self.batch_size = batch_size
 
     def tokenizeWithoutLabel(self, data):
         max_length = 128
@@ -36,7 +37,6 @@ class generater:
         disable_progress_bar()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
-        model = model.to(self.device)
         texts = []
         texts.append({'ids': [0], 'texts' : text})
         tokens = self.tokenizer.encode(text)
@@ -77,7 +77,7 @@ class generater:
             return {'masked':max_info[0]['texts'], 'original':text}
             
     def tokenizeMasked(self, data):
-        text = self.deleteStyleToken(data, 32)
+        text = self.deleteStyleToken(data, self.batch_size)
         tokenized_datas = self.gen_tokenizer(
             f"<unused0> <unused1> {text['masked']} <unused2>",
             return_tensors="pt"
