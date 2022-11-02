@@ -66,7 +66,7 @@ class generater:
             for i, prob in enumerate(softmax):
                 if up_i == 0 and i == 0:
                     if prob[1] < 0.7:
-                        return 
+                        return {'masked':text, 'original':text}
                     else:
                         vanil_prob = prob
                 else:
@@ -78,14 +78,13 @@ class generater:
             
     def tokenizeMasked(self, data):
         text = self.deleteStyleToken(data, self.batch_size)
-        if text:
-            tokenized_datas = self.gen_tokenizer(
-                f"<unused0> <unused1> {text['masked']} <unused2>",
-                return_tensors="pt"
-            )
-            return tokenized_datas
-        else:
+        if text['maksed'] == text['original']:
             return
+        tokenized_datas = self.gen_tokenizer(
+            f"<unused0> <unused1> {text['masked']} <unused2>",
+            return_tensors="pt"
+        )
+        return tokenized_datas
 
     def makeMoralText(self, immoral_text):
         input = self.tokenizeMasked(immoral_text)
