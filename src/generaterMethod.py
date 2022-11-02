@@ -78,7 +78,7 @@ class generater:
             
     def tokenizeMasked(self, data):
         text = self.deleteStyleToken(data, self.batch_size)
-        if text['maksed'] == text['original']:
+        if text['masked'] == text['original']:
             return
         tokenized_datas = self.gen_tokenizer(
             f"<unused0> <unused1> {text['masked']} <unused2>",
