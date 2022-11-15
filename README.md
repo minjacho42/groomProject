@@ -5,5 +5,20 @@
 ---
 ### 사용 기술
 딥러닝 모델 : pretrained된 KcELECTRA, kogpt2
+
 개발 언어 : python
+
 사용 라이브러리 : Huggingface, Pytorch, streamlit
+
+---
+### 참고 논문
+*  Li, Juncen, et al. "Delete, retrieve, generate: A simple approach to sentiment and style transfer."
+*  배장성, et al. "마스크 언어 모델 기반 비병렬 한국어 텍스트 스타일 변환"
+*  Joosung Lee. "Stable Style Transformer: Delete and Generate Approach with Encoder-Decoder for Text Style Transfer"
+
+---
+### 참고 github
+* https://github.com/rungjoo/Stable-Style-Transformer
+* https://github.com/agaralabs/transformer-drg-style-transfer
+* https://github.com/Beomi/KcELECTRA
+* https://github.com/SKT-AI/KoGPT2
